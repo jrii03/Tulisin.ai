@@ -87,7 +87,7 @@ export default async function handler(req, res) {
 
         // Prepare request to OpenRouter API
         const openRouterRequest = {
-            model: "openai/gpt-3.5-turbo",
+            model: "deepseek/deepseek-r1-0528:free",
             messages: [
                 {
                     role: "system",
