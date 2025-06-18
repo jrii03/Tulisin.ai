@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Caption - Tulisin.ai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold">
+                        <i class="fas fa-robot mr-2"></i>Tulisin.ai
+                    </h1>
+                    <p class="text-lg mt-2">Generator Caption Produk</p>
+                </div>
+                <a href="index.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-home mr-2"></i>Beranda
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Form Section -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Buat Caption Produk Anda</h2>
+                    <p class="text-gray-600">Isi form di bawah ini untuk menghasilkan caption yang menarik dan efektif</p>
+                </div>
+
+                <form id="captionForm" class="space-y-6">
+                    <!-- Nama Produk -->
+                    <div>
+                        <label for="productName" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-box mr-2"></i>Nama Produk *
+                        </label>
+                        <input 
+                            type="text" 
+                            id="productName" 
+                            name="productName" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                            placeholder="Contoh: Tas Ransel Anti Air Premium"
+                        >
+                    </div>
+
+                    <!-- Gaya Bahasa -->
+                    <div>
+                        <label for="languageStyle" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-palette mr-2"></i>Gaya Bahasa *
+                        </label>
+                        <select 
+                            id="languageStyle" 
+                            name="languageStyle" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                        >
+                            <option value="">Pilih gaya bahasa...</option>
+                            <option value="formal">Formal - Profesional dan resmi</option>
+                            <option value="lucu">Lucu - Santai dan menghibur</option>
+                            <option value="singkat">Singkat - Padat dan to the point</option>
+                            <option value="promosi">Promosi - Menarik dan persuasif</option>
+                        </select>
+                    </div>
+
+                    <!-- Target Audiens -->
+                    <div>
+                        <label for="targetAudience" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-users mr-2"></i>Target Audiens (Opsional)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="targetAudience" 
+                            name="targetAudience"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                            placeholder="Contoh: Mahasiswa, Pekerja kantoran, Ibu rumah tangga"
+                        >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button 
+                            type="submit" 
+                            id="generateBtn"
+                            class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 px-8 rounded-lg text-lg btn-hover disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <span id="btnText">
+                                <i class="fas fa-magic mr-2"></i>Generate Caption
+                            </span>
+                            <span id="btnLoading" class="hidden">
+                                <div class="spinner inline-block mr-2"></div>Generating...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Result Section -->
+            <div id="resultSection" class="hidden bg-white rounded-xl shadow-lg p-8 fade-in">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>Caption Berhasil Dibuat!
+                    </h3>
+                    <p class="text-gray-600">Salin caption di bawah ini dan gunakan untuk promosi produk Anda</p>
+                </div>
+
+                <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-6 relative">
+                    <div id="captionResult" class="text-gray-800 leading-relaxed whitespace-pre-wrap"></div>
+                    <button 
+                        id="copyBtn"
+                        class="absolute top-4 right-4 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                        onclick="copyToClipboard()"
+                    >
+                        <i class="fas fa-copy mr-1"></i>Salin
+                    </button>
+                </div>
+
+                <div class="text-center mt-6">
+                    <button 
+                        onclick="resetForm()"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                    >
+                        <i class="fas fa-redo mr-2"></i>Buat Caption Lagi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 fade-in">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-2"></i>
+                    <h3 class="text-lg font-bold text-red-800 mb-2">Terjadi Kesalahan</h3>
+                    <p id="errorMessage" class="text-red-600"></p>
+                    <button 
+                        onclick="hideError()"
+                        class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors"
+                    >
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Tulisin.ai</h3>
+                    <p class="text-gray-300">
+                        Platform AI untuk membuat caption produk otomatis yang membantu UMKM dan content creator.
+                    </p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Tautan</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.instagram.com/muhfajri.id" class="text-gray-300 hover:text-white transition-colors flex items-center"><i class="fab fa-instagram mr-2.5 text-lg"></i>Instagram</a></li>
+                        <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors"><i class="fas fa-home mr-2"></i>Beranda</a></li>
+                    </ul>
+                </div>
+
+                <!-- Donation -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Dukung Proyek Ini</h3>
+                    <p class="text-gray-300 mb-4">Dukung pengembangan proyek ini melalui donasi.</p>
+                    <a href="https://saweria.co/F4jr1" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg transition-colors btn-hover">
+                        <i class="fas fa-heart mr-2"></i>Donasi Sekarang
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">
+                    © 2025 Tulisin.ai. Dibuat dengan <i class="fas fa-heart text-red-500"></i> oleh Fajri.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
