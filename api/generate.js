@@ -112,7 +112,7 @@ export default async function handler(req, res) {
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json',
-                'HTTP-Referer': 'https://autocaption-ai.vercel.app', // Optional: your site URL
+                'HTTP-Referer': 'https://tulisin-ai.vercel.app/', // Optional: your site URL
                 'X-Title': 'AutoCaption AI' // Optional: your app name
             },
             body: JSON.stringify(openRouterRequest)
