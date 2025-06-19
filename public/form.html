@@ -136,7 +136,7 @@
             if (!isLocalhost) {
                 // Production: use clean URLs
                 formLinks.forEach(link => link.href = '/form');
-                homeLinks.forEach(link => link.href = '/home');
+                homeLinks.forEach(link => link.href = '/'); // Use root instead of /home
             }
             // Development: keep .html extensions (already set)
         });
