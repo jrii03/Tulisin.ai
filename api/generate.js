@@ -88,7 +88,7 @@ export default async function handler(req, res) {
 
         // Prepare request to OpenRouter API
         const openRouterRequest = {
-            model: "qwen/qwq-32b:free",
+            model: "google/gemma-3-4b-it:free",
             messages: [
                 {
                     role: "system",
