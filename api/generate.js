@@ -75,11 +75,12 @@ export default async function handler(req, res) {
                              
                              Aturan:
                              - Gunakan bahasa Indonesia yang natural dan sesuai target audiens
+                             - jangan menggunakan bahasa lain selain bahasa indonesia
                              - Sertakan emoji yang relevan dan menarik
                              - Tambahkan hashtag yang tepat dan populer
                              - Buat caption yang mudah dibaca dan eye-catching
                              - Fokus pada benefit dan value proposition produk
-                             - Panjang caption ideal 50-150 kata
+                             - Panjang caption ideal 50-100 kata
                              
                              Berikan hanya caption saja tanpa penjelasan tambahan.`;
 
