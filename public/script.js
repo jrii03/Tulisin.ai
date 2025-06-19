@@ -265,5 +265,149 @@ Jangan sampai terlewat! Stock terbatas!
     }
 }
 
+// Feedback Modal Functions
+let selectedRating = 0;
+
+function openFeedbackModal() {
+    const modal = document.getElementById('feedbackModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+}
+
+function closeFeedbackModal() {
+    const modal = document.getElementById('feedbackModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto'; // Restore scroll
+
+    // Reset form
+    document.getElementById('feedbackForm').reset();
+    selectedRating = 0;
+    updateRatingDisplay();
+}
+
+function setRating(rating) {
+    selectedRating = rating;
+    document.getElementById('rating').value = rating;
+    updateRatingDisplay();
+}
+
+function updateRatingDisplay() {
+    const ratingButtons = document.querySelectorAll('.rating-btn');
+    ratingButtons.forEach((btn, index) => {
+        const star = btn.querySelector('i');
+        if (index < selectedRating) {
+            // Active star
+            btn.classList.remove('text-gray-300');
+            btn.classList.add('text-yellow-400');
+            star.classList.remove('far');
+            star.classList.add('fas');
+        } else {
+            // Inactive star
+            btn.classList.remove('text-yellow-400');
+            btn.classList.add('text-gray-300');
+            star.classList.remove('fas');
+            star.classList.add('far');
+        }
+    });
+}
+
+// Add hover effects for rating stars
+function addRatingHoverEffects() {
+    const ratingButtons = document.querySelectorAll('.rating-btn');
+
+    ratingButtons.forEach((btn, index) => {
+        // Mouse enter - highlight up to this star
+        btn.addEventListener('mouseenter', function() {
+            ratingButtons.forEach((b, i) => {
+                const star = b.querySelector('i');
+                if (i <= index) {
+                    b.classList.remove('text-gray-300');
+                    b.classList.add('text-yellow-400');
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    b.classList.remove('text-yellow-400');
+                    b.classList.add('text-gray-300');
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        });
+    });
+
+    // Mouse leave - restore to selected rating
+    const ratingContainer = document.querySelector('.rating-btn').parentElement;
+    ratingContainer.addEventListener('mouseleave', function() {
+        updateRatingDisplay();
+    });
+}
+
+// Handle feedback form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const feedbackForm = document.getElementById('feedbackForm');
+    if (feedbackForm) {
+        // Initialize rating hover effects
+        addRatingHoverEffects();
+        feedbackForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const rating = selectedRating;
+            const feedbackText = document.getElementById('feedbackText').value.trim();
+
+            if (rating === 0) {
+                alert('Mohon berikan rating terlebih dahulu');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<div class="spinner inline-block mr-2"></div>Mengirim...';
+            submitBtn.disabled = true;
+
+            try {
+                // For now, just show success message (since endpoint doesn't exist yet)
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+
+                alert('Terima kasih atas feedback Anda! 🙏');
+
+                // Store feedback locally for now
+                const feedback = {
+                    rating: rating,
+                    feedback: feedbackText,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                const existingFeedback = JSON.parse(localStorage.getItem('autocaption_feedback') || '[]');
+                existingFeedback.push(feedback);
+                localStorage.setItem('autocaption_feedback', JSON.stringify(existingFeedback));
+
+                closeFeedbackModal();
+
+            } catch (error) {
+                console.log('Feedback error:', error);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            } finally {
+                // Restore button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+});
+
+// Close modal when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('feedbackModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeFeedbackModal();
+            }
+        });
+    }
+});
+
 // Uncomment the line below to enable demo mode for testing
-// enableDemoMode();
+//enableDemoMode();
