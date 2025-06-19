@@ -207,15 +207,24 @@
                     <p class="text-gray-600">Salin caption di bawah ini dan gunakan untuk promosi produk Anda</p>
                 </div>
 
-                <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-6 relative">
-                    <div id="captionResult" class="text-gray-800 leading-relaxed whitespace-pre-wrap"></div>
-                    <button 
-                        id="copyBtn"
-                        class="absolute top-4 right-4 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors"
-                        onclick="copyToClipboard()"
-                    >
-                        <i class="fas fa-copy mr-1"></i>Salin
-                    </button>
+                <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden">
+                    <!-- Header dengan tombol copy -->
+                    <div class="bg-gray-100 px-4 py-2 flex justify-between items-center border-b border-gray-300">
+                        <span class="text-sm font-medium text-gray-600">
+                            <i class="fas fa-file-text mr-2"></i>Hasil Caption
+                        </span>
+                        <button
+                            id="copyBtn"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors btn-hover"
+                            onclick="copyToClipboard()"
+                        >
+                            <i class="fas fa-copy mr-1"></i>Salin
+                        </button>
+                    </div>
+                    <!-- Content area -->
+                    <div class="p-6">
+                        <div id="captionResult" class="text-gray-800 leading-relaxed whitespace-pre-wrap min-h-[100px]"></div>
+                    </div>
                 </div>
 
                 <div class="text-center mt-6">
