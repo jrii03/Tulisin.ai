@@ -6,10 +6,6 @@
       "destination": "/index.html"
     },
     {
-      "source": "/home",
-      "destination": "/index.html"
-    },
-    {
       "source": "/form",
       "destination": "/form.html"
     }
