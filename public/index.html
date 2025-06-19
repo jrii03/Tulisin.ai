@@ -12,21 +12,62 @@
         }
         .card-hover {
             transition: all 0.3s ease;
+            box-shadow:
+                0 10px 20px rgba(0, 0, 0, 0.1),
+                0 6px 6px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
         }
         .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
         .btn-hover {
             transition: all 0.3s ease;
+            box-shadow:
+                0 8px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .btn-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        /* 3D Container Effects */
+        .container-3d {
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                0 5px 15px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-10px) rotateX(8deg) rotateY(2deg);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.15),
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-200 min-h-screen">
     <!-- Header -->
     <header class="gradient-bg text-white">
         <div class="container mx-auto px-6 py-16">
@@ -48,16 +89,18 @@
     </header>
 
     <!-- Features Section -->
-    <section class="py-16">
-        <div class="container mx-auto px-6">
+    <section class="py-16 bg-gray-200">
+        <div class="container mx-auto px-4 container-3d">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold text-gray-800 mb-4">Fitur Unggulan</h2>
                 <p class="text-gray-600 text-lg">Solusi lengkap untuk kebutuhan caption produk Anda</p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Row 1: First 2 features -->
+                <div class="grid md:grid-cols-2 gap-8 md:col-span-2">
+                    <!-- Feature 1 -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-3d">
                     <div class="text-center">
                         <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-brain text-blue-600 text-2xl"></i>
@@ -69,55 +112,63 @@
                     </div>
                 </div>
 
-                <!-- Feature 2 -->
-                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
-                    <div class="text-center">
-                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-bolt text-green-600 text-2xl"></i>
+                    <!-- Feature 2 -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-3d">
+                        <div class="text-center">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-bolt text-green-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Hasil Cepat</h3>
+                            <p class="text-gray-600">
+                                Hasil cepat dan otomatis, langsung dihasilkan dari form input tanpa menunggu lama
+                            </p>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Hasil Cepat</h3>
-                        <p class="text-gray-600">
-                            Hasil cepat dan otomatis, langsung dihasilkan dari form input tanpa menunggu lama
-                        </p>
                     </div>
                 </div>
 
-                <!-- Feature 3 -->
-                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
-                    <div class="text-center">
-                        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-globe text-purple-600 text-2xl"></i>
+                <div class="grid md:grid-cols-2 gap-8 md:col-span-2 max-w-4xl mx-auto">
+                    <!-- Feature 3 -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-3d">
+                        <div class="text-center">
+                            <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-globe text-purple-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Tanpa Daftar</h3>
+                            <p class="text-gray-600">
+                                Langsung gunakan tanpa perlu daftar atau login. Akses mudah dan praktis untuk semua
+                            </p>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Tanpa Daftar</h3>
-                        <p class="text-gray-600">
-                            Langsung gunakan tanpa perlu daftar atau login. Akses mudah dan praktis untuk semua
-                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-3d">
+                        <div class="text-center">
+                            <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-clipboard text-orange-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Siap Pakai</h3>
+                            <p class="text-gray-600">
+                                Format hasil rapi dan siap pakai untuk berbagai platform media sosial dan marketplace
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Feature 4 -->
-                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
-                    <div class="text-center">
-                        <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-clipboard text-orange-600 text-2xl"></i>
+                <!-- Row 3: Feature 5 centered -->
+                <div class="flex justify-center md:col-span-2 mt-8">
+                    <div class="w-full max-w-max">
+                        <!-- Feature 5 -->
+                        <div class="bg-white rounded-xl p-6 shadow-lg card-3d">
+                            <div class="text-center">
+                                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-money-bill-alt text-orange-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-3">Gratis</h3>
+                                <p class="text-gray-600">
+                                   Web ini gratis, namun dukungan Anda sangat dihargai. Silakan donasi jika Anda merasa platform ini bermanfaat.
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Siap Pakai</h3>
-                        <p class="text-gray-600">
-                            Format hasil rapi dan siap pakai untuk berbagai platform media sosial dan marketplace
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
-                    <div class="text-center">
-                        <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-money-bill-alt text-orange-600 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Gratis</h3>
-                        <p class="text-gray-600">
-                           Web ini gratis, namun dukungan Anda sangat dihargai. Silakan donasi jika Anda merasa platform ini bermanfaat.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -125,7 +176,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 bg-gray-100">
+    <section class="py-16 bg-gray-200">
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold text-gray-800 mb-6">Siap Membuat Caption yang Menarik?</h2>
             <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
