@@ -66,6 +66,25 @@
                 inset 0 -1px 0 rgba(0, 0, 0, 0.1);
         }
     </style>
+    <script>
+        // Smart URL handling for development vs production
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLocalhost = window.location.hostname === 'localhost' ||
+                               window.location.hostname === '127.0.0.1' ||
+                               window.location.protocol === 'file:';
+
+            // Update all links based on environment
+            const formLinks = document.querySelectorAll('a[href="form.html"]');
+            const homeLinks = document.querySelectorAll('a[href="index.html"]');
+
+            if (!isLocalhost) {
+                // Production: use clean URLs
+                formLinks.forEach(link => link.href = '/form');
+                homeLinks.forEach(link => link.href = '/home');
+            }
+            // Development: keep .html extensions (already set)
+        });
+    </script>
 </head>
 <body class="bg-gray-200 min-h-screen">
     <!-- Header -->
@@ -228,3 +247,4 @@
     </footer>
 </body>
 </html>
+
