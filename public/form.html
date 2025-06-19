@@ -12,10 +12,16 @@
         }
         .btn-hover {
             transition: all 0.3s ease;
+            box-shadow:
+                0 8px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .btn-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
         .spinner {
             border: 3px solid #f3f3f3;
@@ -36,9 +42,68 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* 3D Container Effects */
+        .container-3d {
+            perspective: 1000px;
+        }
+
+        .form-3d {
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 10px 20px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        }
+
+        .form-3d:hover {
+            transform: translateY(-5px) rotateX(2deg);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.15),
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .result-3d {
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 25px 50px rgba(34, 197, 94, 0.1),
+                0 15px 30px rgba(34, 197, 94, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -1px 0 rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            background: linear-gradient(145deg, #ffffff, #f0fdf4);
+        }
+
+        .result-3d:hover {
+            transform: translateY(-8px) rotateX(3deg);
+            box-shadow:
+                0 35px 70px rgba(34, 197, 94, 0.15),
+                0 25px 50px rgba(34, 197, 94, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(34, 197, 94, 0.15);
+        }
+
+        .error-3d {
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 20px 40px rgba(239, 68, 68, 0.1),
+                0 10px 20px rgba(239, 68, 68, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -1px 0 rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: linear-gradient(145deg, #fef2f2, #fee2e2);
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-200 min-h-screen">
     <!-- Header -->
     <header class="gradient-bg text-white py-8">
         <div class="container mx-auto px-6">
@@ -57,10 +122,10 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-6 py-12 container-3d">
         <div class="max-w-4xl mx-auto">
             <!-- Form Section -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 form-3d">
                 <div class="text-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4">Buat Caption Produk Anda</h2>
                     <p class="text-gray-600">Isi form di bawah ini untuk menghasilkan caption yang menarik dan efektif</p>
@@ -120,7 +185,7 @@
                         <button 
                             type="submit" 
                             id="generateBtn"
-                            class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 px-8 rounded-lg text-lg btn-hover disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <span id="btnText">
                                 <i class="fas fa-magic mr-2"></i>Generate Caption
@@ -134,7 +199,7 @@
             </div>
 
             <!-- Result Section -->
-            <div id="resultSection" class="hidden bg-white rounded-xl shadow-lg p-8 fade-in">
+            <div id="resultSection" class="hidden bg-white rounded-xl shadow-lg p-8 fade-in result-3d">
                 <div class="text-center mb-6">
                     <h3 class="text-2xl font-bold text-gray-800 mb-2">
                         <i class="fas fa-check-circle text-green-500 mr-2"></i>Caption Berhasil Dibuat!
@@ -164,7 +229,7 @@
             </div>
 
             <!-- Error Section -->
-            <div id="errorSection" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 fade-in">
+            <div id="errorSection" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 fade-in error-3d">
                 <div class="text-center">
                     <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-2"></i>
                     <h3 class="text-lg font-bold text-red-800 mb-2">Terjadi Kesalahan</h3>
