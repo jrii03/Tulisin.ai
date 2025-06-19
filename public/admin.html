@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AutoCaption AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold">
+                    <i class="fas fa-chart-bar mr-2"></i>Admin Dashboard
+                </h1>
+                <a href="/" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-home mr-2"></i>Kembali ke Website
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Stats Cards -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-comments text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Total Feedback</h3>
+                        <p id="totalFeedback" class="text-2xl font-bold text-blue-600">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <i class="fas fa-star text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Rating Rata-rata</h3>
+                        <p id="averageRating" class="text-2xl font-bold text-yellow-600">0.0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-thumbs-up text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Rating 4-5</h3>
+                        <p id="positiveRating" class="text-2xl font-bold text-green-600">0%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-tools mr-2"></i>Actions
+            </h2>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="loadFeedback()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-refresh mr-2"></i>Refresh Data
+                </button>
+                <button onclick="exportFeedback()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-download mr-2"></i>Export JSON
+                </button>
+                <button onclick="clearFeedback()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-trash mr-2"></i>Clear All Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Feedback List -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-list mr-2"></i>Daftar Feedback
+            </h2>
+            <div id="feedbackList" class="space-y-4">
+                <!-- Feedback items will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load feedback data
+        function loadFeedback() {
+            const feedbackData = JSON.parse(localStorage.getItem('autocaption_feedback') || '[]');
+            
+            // Update stats
+            updateStats(feedbackData);
+            
+            // Display feedback list
+            displayFeedbackList(feedbackData);
+        }
+
+        function updateStats(feedbackData) {
+            const total = feedbackData.length;
+            const totalRating = feedbackData.reduce((sum, item) => sum + item.rating, 0);
+            const average = total > 0 ? (totalRating / total).toFixed(1) : 0;
+            const positive = feedbackData.filter(item => item.rating >= 4).length;
+            const positivePercentage = total > 0 ? Math.round((positive / total) * 100) : 0;
+
+            document.getElementById('totalFeedback').textContent = total;
+            document.getElementById('averageRating').textContent = average;
+            document.getElementById('positiveRating').textContent = positivePercentage + '%';
+        }
+
+        function displayFeedbackList(feedbackData) {
+            const container = document.getElementById('feedbackList');
+            
+            if (feedbackData.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-inbox text-4xl mb-4"></i>
+                        <p>Belum ada feedback yang masuk</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by timestamp (newest first)
+            const sortedFeedback = feedbackData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            container.innerHTML = sortedFeedback.map((item, index) => `
+                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center">
+                            <span class="text-sm font-medium text-gray-500 mr-4">#${feedbackData.length - index}</span>
+                            <div class="flex items-center">
+                                ${generateStars(item.rating)}
+                                <span class="ml-2 text-sm font-medium text-gray-700">${item.rating}/5</span>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500">${formatDate(item.timestamp)}</span>
+                    </div>
+                    ${item.feedback ? `
+                        <div class="bg-gray-50 rounded p-3 mt-2">
+                            <p class="text-gray-700 text-sm">"${item.feedback}"</p>
+                        </div>
+                    ` : '<p class="text-gray-400 text-sm italic">Tidak ada komentar</p>'}
+                </div>
+            `).join('');
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star text-yellow-400"></i>';
+                } else {
+                    stars += '<i class="far fa-star text-gray-300"></i>';
+                }
+            }
+            return stars;
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString('id-ID', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function exportFeedback() {
+            const feedbackData = JSON.parse(localStorage.getItem('autocaption_feedback') || '[]');
+            const dataStr = JSON.stringify(feedbackData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `autocaption_feedback_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        function clearFeedback() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua data feedback? Tindakan ini tidak dapat dibatalkan.')) {
+                localStorage.removeItem('autocaption_feedback');
+                loadFeedback();
+                alert('Semua data feedback telah dihapus.');
+            }
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadFeedback);
+    </script>
+</body>
+</html>
