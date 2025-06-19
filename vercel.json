@@ -1,7 +1,7 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/form", "dest": "/form.html" },
+    { "src": "/form", "dest": "public/form.html" },
     { "src": "/", "dest": "/index.html" }
   ]
 }
