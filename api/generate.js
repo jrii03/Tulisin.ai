@@ -88,7 +88,7 @@ export default async function handler(req, res) {
 
         // Prepare request to OpenRouter API
         const openRouterRequest = {
-            model: "deepseek/deepseek-r1:free",
+            model: "qwen/qwq-32b:free",
             messages: [
                 {
                     role: "system",
